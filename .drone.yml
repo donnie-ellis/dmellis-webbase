@@ -10,7 +10,7 @@ steps:
   - name: build
     image: plugins/docker
     settings:
-      repo: docker.dmellis.com/dmellis/webBase
+      repo: docker.dmellis.com/dmellis/webbase
       registry: docker.dmellis.com
       dockerfile: ./Dockerfile
       tags: ["${DRONE_COMMIT_SHA:0:7}", "latest"]
