@@ -1,0 +1,34 @@
+kind: pipeline
+type: kubernetes
+name: dmellis-WebBase
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: build
+    image: plugins/docker
+    settings:
+      repo: docker.dmellis.com/dmellis/webBase
+      registry: docker.dmellis.com
+      dockerfile: ./Dockerfile
+      tags: ["${DRONE_COMMIT_SHA:0:7}", "latest"]
+      username:
+        from_secret: dmellis-web_username
+      password: 
+        from_secret: dmellis-web_password
+  - name: discord notification
+    image: appleboy/drone-discord
+    settings:
+      webhook_id: 
+        from_secret: dmellis-web_discordID
+      webhook_token:
+        from_secret: dmellis-web_discordToken
+    when:
+        status:
+          - success
+          - failure
+trigger:
+  branch:
+    - master
