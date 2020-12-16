@@ -15,20 +15,9 @@ steps:
       dockerfile: ./Dockerfile
       tags: ["${DRONE_COMMIT_SHA:0:7}", "latest"]
       username:
-        from_secret: dmellis-web_username
+        from_secret: dmellis-WebBase_username
       password: 
-        from_secret: dmellis-web_password
-  - name: discord notification
-    image: appleboy/drone-discord
-    settings:
-      webhook_id: 
-        from_secret: dmellis-web_discordID
-      webhook_token:
-        from_secret: dmellis-web_discordToken
-    when:
-        status:
-          - success
-          - failure
+        from_secret: dmellis-WebBase_password
 trigger:
   branch:
     - master
